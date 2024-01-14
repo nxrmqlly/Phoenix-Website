@@ -3,8 +3,10 @@ let gameData;
 
 const gamesSection = document.getElementById('games-section');
 const questionsSection = document.getElementById('questions-section');
+const resultsSection = document.getElementById('results-section'); // Added this line
 const gamesForm = document.getElementById('games-form');
 const questionsForm = document.getElementById('questions-form');
+const resultsDiv = document.getElementById('results'); // Added this line
 
 // Function to fetch JSON data
 async function fetchGameData() {
@@ -64,9 +66,25 @@ function showQuestions() {
     });
 }
 
-// Function to submit answers (You can customize this function as needed)
+// Function to submit answers and show results
 function submitAnswers() {
-    alert('Answers submitted successfully!'); // Placeholder action, you can customize this.
+    resultsDiv.innerHTML = ''; // Clear previous results
+
+    gameData.games.forEach(game => {
+        if (document.getElementById(game.name).checked) {
+            game.questions.forEach(question => {
+                const checkbox = document.getElementById(`${game.name}_${question}`);
+                if (checkbox && checkbox.checked) {
+                    const resultItem = document.createElement('div');
+                    resultItem.appendChild(document.createTextNode(`${game.name}: ${question}`));
+                    resultsDiv.appendChild(resultItem);
+                }
+            });
+        }
+    });
+
+    questionsSection.style.display = 'none';
+    resultsSection.style.display = 'block';
 }
 
 // Initial call to populate the games section
