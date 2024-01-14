@@ -135,3 +135,12 @@ function submitAnswers() {
 
 // Initial call to populate the games section
 populateGamesSection();
+
+// Function to open the Discord bot authorization URL
+function openBotAuthorization() {
+    window.open('https://discord.com/api/oauth2/authorize?client_id=1185961899024715928&permissions=139586948161&scope=bot');
+}
+
+// Add event listener to the "Add bot" button
+const addBotButton = document.getElementById('addBotButton');
+addBotButton.addEventListener('click', openBotAuthorization);
