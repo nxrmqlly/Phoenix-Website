@@ -162,7 +162,7 @@ function showNotification(message) {
 function copyToClipboard() {
     const resultsText = resultsDiv.innerText;
     navigator.clipboard.writeText(resultsText).then(() => {
-        showNotification('Text copied to clipboard!');
+        showNotification('Text copied to clipboard! Reply to the bot with just the copied text!');
     }).catch(err => {
         console.error('Unable to copy text to clipboard.', err);
     });
