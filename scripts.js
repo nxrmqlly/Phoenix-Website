@@ -145,11 +145,24 @@ function openBotAuthorization() {
 const addBotButton = document.getElementById('addBotButton');
 addBotButton.addEventListener('click', openBotAuthorization);
 
+// Function to show a notification
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    // Remove the notification after a certain duration (e.g., 3 seconds)
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
 // Function to copy the generated text to the clipboard
 function copyToClipboard() {
     const resultsText = resultsDiv.innerText;
     navigator.clipboard.writeText(resultsText).then(() => {
-        alert('Done! Text copied to clipboard.');
+        showNotification('Text copied to clipboard!');
     }).catch(err => {
         console.error('Unable to copy text to clipboard.', err);
     });

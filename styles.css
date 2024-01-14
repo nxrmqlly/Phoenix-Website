@@ -32,3 +32,14 @@ button#addBotButton {
 button#addBotButton:hover {
     background-color: #45a049;
 }
+
+.notification {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
