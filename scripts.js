@@ -3,10 +3,12 @@ let gameData;
 
 const gamesSection = document.getElementById('games-section');
 const questionsSection = document.getElementById('questions-section');
-const resultsSection = document.getElementById('results-section'); // Added this line
+const resultsSection = document.getElementById('results-section');
 const gamesForm = document.getElementById('games-form');
 const questionsForm = document.getElementById('questions-form');
-const resultsDiv = document.getElementById('results'); // Added this line
+const resultsDiv = document.getElementById('results');
+const submitGamesButton = document.getElementById('submit-games');
+const submitQuestionsButton = document.getElementById('submit-questions');
 
 // Function to fetch JSON data
 async function fetchGameData() {
@@ -32,7 +34,21 @@ async function populateGamesSection() {
 
         gamesForm.appendChild(checkbox);
         gamesForm.appendChild(label);
+
+        // Check if at least one game is selected
+        checkbox.addEventListener('change', checkGamesSelection);
     });
+}
+
+// Function to check games selection and enable/disable the submit button
+function checkGamesSelection() {
+    const selectedGames = Array.from(document.querySelectorAll('input[name="selectedGames"]:checked')).length > 0;
+
+    if (selectedGames) {
+        submitGamesButton.removeAttribute('disabled');
+    } else {
+        submitGamesButton.setAttribute('disabled', 'true');
+    }
 }
 
 // Function to show the questions section
@@ -46,6 +62,8 @@ function showQuestions() {
             const gameHeader = document.createElement('h3');
             gameHeader.appendChild(document.createTextNode(`Questions for ${game.name}`));
             questionsForm.appendChild(gameHeader);
+
+            let questionsSelected = false; // Flag to check if at least one question is selected for the game
 
             game.questions.forEach(question => {
                 const checkbox = document.createElement('input');
@@ -61,7 +79,26 @@ function showQuestions() {
                 questionsForm.appendChild(checkbox);
                 questionsForm.appendChild(label);
                 questionsForm.appendChild(document.createElement('br'));
+
+                // Check if at least one question is selected for the game
+                checkbox.addEventListener('change', () => {
+                    questionsSelected = Array.from(document.querySelectorAll(`input[name="question_${game.name}"]:checked`)).length > 0;
+                    checkSubmitButton();
+                });
             });
+
+            // Function to check the submit button status
+            function checkSubmitButton() {
+                const submitButton = document.getElementById('submit-questions');
+                if (questionsSelected) {
+                    submitButton.removeAttribute('disabled');
+                } else {
+                    submitButton.setAttribute('disabled', 'true');
+                }
+            }
+
+            // Initial check for submit button
+            checkSubmitButton();
         }
     });
 }
@@ -72,14 +109,23 @@ function submitAnswers() {
 
     gameData.games.forEach(game => {
         if (document.getElementById(game.name).checked) {
+            let questionsSelected = false; // Flag to check if at least one question is selected for the game
+
             game.questions.forEach(question => {
                 const checkbox = document.getElementById(`${game.name}_${question}`);
                 if (checkbox && checkbox.checked) {
+                    questionsSelected = true;
                     const resultItem = document.createElement('div');
                     resultItem.appendChild(document.createTextNode(`${game.name}: ${question}`));
                     resultsDiv.appendChild(resultItem);
                 }
             });
+
+            // Check if at least one question is selected for each game
+            if (!questionsSelected) {
+                alert(`Please select at least one question for ${game.name}.`);
+                return; // Stop further processing if condition not met
+            }
         }
     });
 
