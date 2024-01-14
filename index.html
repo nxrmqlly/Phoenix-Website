@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h1>Choose Games</h1>
+
+  <form id="gameForm">
+    <!-- Dynamically populate games -->
+    <label for="game1">
+      <input type="checkbox" id="game1" class="gameCheckbox" name="games" value="Game 1"> Game 1
+    </label>
+    <label for="game2">
+      <input type="checkbox" id="game2" class="gameCheckbox" name="games" value="Game 2"> Game 2
+    </label>
+    <label for="game3">
+      <input type="checkbox" id="game3" class="gameCheckbox" name="games" value="Game 3"> Game 3
+    </label>
+
+    <div class="questions" id="questionsContainer">
+      <!-- Questions will be dynamically populated here -->
+    </div>
+
+    <input type="button" value="Submit" onclick="submitForm()">
+  </form>
+
+  <div class="result" id="resultContainer"></div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
