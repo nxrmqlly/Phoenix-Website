@@ -1,80 +1,69 @@
-// Load questions from JSON
-const games = fetch('questions.json')
-  .then(response => response.json())
-  .then(data => {
-    const gameForm = document.getElementById('gameForm');
-    const questionsContainer = document.getElementById('questionsContainer');
-    const resultContainer = document.getElementById('resultContainer');
+// Assuming you have the provided JSON stored in a variable named 'gameData'
+let gameData;
 
-    // Add event listener to checkboxes
-    document.querySelectorAll('.gameCheckbox').forEach(checkbox => {
-      checkbox.addEventListener('change', () => {
-        updateQuestions(data);
-      });
+const gamesSection = document.getElementById('games-section');
+const questionsSection = document.getElementById('questions-section');
+const gamesForm = document.getElementById('games-form');
+const questionsForm = document.getElementById('questions-form');
+
+// Function to fetch JSON data
+async function fetchGameData() {
+    const response = await fetch('questions.json'); // Assuming the JSON file is in the same directory
+    const data = await response.json();
+    return data;
+}
+
+// Function to dynamically populate the games section
+async function populateGamesSection() {
+    gameData = await fetchGameData();
+
+    gameData.games.forEach(game => {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'selectedGames';
+        checkbox.value = game.name;
+        checkbox.id = game.name;
+
+        const label = document.createElement('label');
+        label.htmlFor = game.name;
+        label.appendChild(document.createTextNode(game.name));
+
+        gamesForm.appendChild(checkbox);
+        gamesForm.appendChild(label);
     });
+}
 
-    // Function to update questions based on selected games
-    function updateQuestions(data) {
-      questionsContainer.innerHTML = ''; // Clear previous questions
+// Function to show the questions section
+function showQuestions() {
+    gamesSection.style.display = 'none';
+    questionsSection.style.display = 'block';
 
-      // Iterate through selected games
-      document.querySelectorAll('.gameCheckbox:checked').forEach(checkbox => {
-        const selectedGame = data.games.find(game => game.name === checkbox.value);
+    // Dynamically populate the questions section based on selected games
+    gameData.games.forEach(game => {
+        if (document.getElementById(game.name).checked) {
+            game.questions.forEach(question => {
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `question_${game.name}`;
+                radio.value = question;
+                radio.id = `${game.name}_${question}`;
 
-        // Display questions for selected game
-        if (selectedGame) {
-          const gameElement = document.createElement('div');
-          gameElement.classList.add('question');
+                const label = document.createElement('label');
+                label.htmlFor = `${game.name}_${question}`;
+                label.appendChild(document.createTextNode(question));
 
-          // Game name
-          const gameName = document.createElement('h2');
-          gameName.textContent = selectedGame.name;
-          gameElement.appendChild(gameName);
-
-          selectedGame.questions.forEach((question, index) => {
-            const questionElement = document.createElement('div');
-            questionElement.classList.add('question');
-
-            // Question text
-            const questionText = document.createElement('p');
-            questionText.textContent = question;
-            questionElement.appendChild(questionText);
-
-            // Yes option (radio button)
-            const optionLabel = document.createElement('label');
-            optionLabel.innerHTML = `
-              <input type="radio" class="optionRadio" name="question${index}" value="Yes"> Yes
-            `;
-            questionElement.appendChild(optionLabel);
-
-            gameElement.appendChild(questionElement);
-          });
-
-          questionsContainer.appendChild(gameElement);
+                questionsForm.appendChild(radio);
+                questionsForm.appendChild(label);
+                questionsForm.appendChild(document.createElement('br'));
+            });
         }
-      });
+    });
+}
 
-      // Show/hide questions container
-      questionsContainer.style.display = questionsContainer.children.length > 0 ? 'block' : 'none';
-    }
+// Function to submit answers (You can customize this function as needed)
+function submitAnswers() {
+    alert('Answers submitted successfully!'); // Placeholder action, you can customize this.
+}
 
-    // Function to handle form submission (you can customize this)
-    window.submitForm = function() {
-      const selectedOptions = Array.from(document.querySelectorAll('.optionRadio:checked')).map(radio => ({
-        question: radio.name.replace('question', ''),
-        value: radio.value
-      }));
-
-      // Compile and display selected "Yes" options
-      const yesOptions = selectedOptions.filter(option => option.value === 'Yes');
-      resultContainer.innerHTML = ''; // Clear previous result
-
-      if (yesOptions.length > 0) {
-        const resultMessage = yesOptions.map(option => `Game ${option.question}: Yes`).join('<br>');
-        resultContainer.innerHTML = `<h2>Selected "Yes" Options:</h2>${resultMessage}`;
-      } else {
-        resultContainer.innerHTML = '<h2>No "Yes" options selected.</h2>';
-      }
-    };
-  })
-  .catch(error => console.error('Error loading questions:', error));
+// Initial call to populate the games section
+populateGamesSection();

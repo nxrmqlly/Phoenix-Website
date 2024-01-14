@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz App</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Phoenix</title>
 </head>
+
 <body>
+    <header>
+        <h1>Phoenix</h1>
+    </header>
 
-  <h1>Choose Games</h1>
+    <section id="games-section">
+        <h2>Select Games:</h2>
+        <form id="games-form">
+            <!-- Games will be dynamically added here -->
+            <button type="button" onclick="showQuestions()">Submit</button>
+        </form>
+    </section>
 
-  <form id="gameForm">
-    <!-- Dynamically populate games -->
-    <label for="game1">
-      <input type="checkbox" id="game1" class="gameCheckbox" name="games" value="Game 1"> Game 1
-    </label>
-    <label for="game2">
-      <input type="checkbox" id="game2" class="gameCheckbox" name="games" value="Game 2"> Game 2
-    </label>
-    <label for="game3">
-      <input type="checkbox" id="game3" class="gameCheckbox" name="games" value="Game 3"> Game 3
-    </label>
+    <section id="questions-section" style="display: none;">
+        <h2>Answer Questions:</h2>
+        <form id="questions-form">
+            <!-- Questions and game selections will be dynamically added here -->
+            <button type="button" onclick="submitAnswers()">Submit</button>
+        </form>
+    </section>
 
-    <div class="questions" id="questionsContainer">
-      <!-- Questions will be dynamically populated here -->
-    </div>
-
-    <input type="button" value="Submit" onclick="submitForm()">
-  </form>
-
-  <div class="result" id="resultContainer"></div>
-
-  <script src="scripts.js"></script>
+    <script src="scripts.js"></script>
 </body>
+
 </html>

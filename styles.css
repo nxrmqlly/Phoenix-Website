@@ -1,42 +1,21 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-  }
-  
-  h1 {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
     text-align: center;
-  }
-  
-  form {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  label {
+    padding: 1em;
+}
+
+section {
+    margin: 20px;
+}
+
+button {
     display: block;
-    margin-bottom: 10px;
-  }
-  
-  .questions {
-    display: none;
-    animation: fadeIn 0.5s ease-in-out;
-    margin-top: 20px;
-  }
-  
-  .question {
-    margin-bottom: 20px;
-  }
-  
-  .result {
-    margin-top: 20px;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
+    margin-top: 10px;
+}

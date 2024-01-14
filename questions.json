@@ -1,27 +1,18 @@
 {
     "games": [
       {
-        "name": "Game 1",
+        "name": "Minecraft",
         "questions": [
-          "What is the capital of France?",
-          "Who wrote 'Romeo and Juliet'?",
-          "What is the largest mammal on Earth?"
+          "Developer",
+          "Map Builder",
+          "Hosting Service"
         ]
       },
       {
-        "name": "Game 2",
+        "name": "CS2",
         "questions": [
-          "In which year did World War I begin?",
-          "What is the chemical symbol for gold?",
-          "Who is known as the 'Father of Computer Science'?"
-        ]
-      },
-      {
-        "name": "Game 3",
-        "questions": [
-          "Which planet is known as the 'Red Planet'?",
-          "Who painted the Mona Lisa?",
-          "What is the currency of Japan?"
+          "Developer",
+          "Map Builder"
         ]
       }
     ]
