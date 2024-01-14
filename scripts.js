@@ -41,18 +41,22 @@ function showQuestions() {
     // Dynamically populate the questions section based on selected games
     gameData.games.forEach(game => {
         if (document.getElementById(game.name).checked) {
+            const gameHeader = document.createElement('h3');
+            gameHeader.appendChild(document.createTextNode(`Questions for ${game.name}`));
+            questionsForm.appendChild(gameHeader);
+
             game.questions.forEach(question => {
-                const radio = document.createElement('input');
-                radio.type = 'radio';
-                radio.name = `question_${game.name}`;
-                radio.value = question;
-                radio.id = `${game.name}_${question}`;
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = `question_${game.name}`;
+                checkbox.value = question;
+                checkbox.id = `${game.name}_${question}`;
 
                 const label = document.createElement('label');
                 label.htmlFor = `${game.name}_${question}`;
                 label.appendChild(document.createTextNode(question));
 
-                questionsForm.appendChild(radio);
+                questionsForm.appendChild(checkbox);
                 questionsForm.appendChild(label);
                 questionsForm.appendChild(document.createElement('br'));
             });
