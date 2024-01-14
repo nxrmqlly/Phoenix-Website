@@ -144,3 +144,17 @@ function openBotAuthorization() {
 // Add event listener to the "Add bot" button
 const addBotButton = document.getElementById('addBotButton');
 addBotButton.addEventListener('click', openBotAuthorization);
+
+// Function to copy the generated text to the clipboard
+function copyToClipboard() {
+    const resultsText = resultsDiv.innerText;
+    navigator.clipboard.writeText(resultsText).then(() => {
+        alert('Done! Text copied to clipboard.');
+    }).catch(err => {
+        console.error('Unable to copy text to clipboard.', err);
+    });
+}
+
+// Add event listener to the "Copy" button
+const copyButton = document.getElementById('copyButton');
+copyButton.addEventListener('click', copyToClipboard);
